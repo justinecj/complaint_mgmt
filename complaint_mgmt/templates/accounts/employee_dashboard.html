@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Employee Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Employee Dashboard</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Assigned Complaints</h5>
+                <h2 class="card-text">{{ assigned_count }}</h2>
+                <p class="card-text">Complaints assigned to you.</p>
+                <a href="{% url 'assigned_complaints' %}" class="btn btn-light btn-sm">View Assigned</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card text-white bg-secondary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Unassigned Complaints</h5>
+                <h2 class="card-text">{{ unassigned_count }}</h2>
+                <p class="card-text">Pick complaints to handle.</p>
+                <a href="{% url 'unassigned_complaints' %}" class="btn btn-light btn-sm">View Unassigned</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

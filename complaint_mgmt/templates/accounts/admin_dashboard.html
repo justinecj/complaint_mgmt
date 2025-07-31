@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-header mb-4">
+    <h2 class="mb-2">Admin Dashboard</h2>
+    <p>Logged in as: <strong>{{ request.user.username }}</strong></p>
+    <p>Time: {{ now|date:"H:i A, d M Y" }}</p>
+</div>
+
+<div class="row">
+  <!-- Employees -->
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+    <div class="card text-white bg-primary h-100">
+      <div class="card-body">
+        <h5 class="card-title">Manage Employees</h5>
+        <p class="card-text">Total: <strong>{{ employee_count }}</strong></p>
+        <a href="{% url 'employee_list' %}" class="btn btn-light btn-sm w-100">Go to Employees</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Customers -->
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+    <div class="card text-white bg-success h-100">
+      <div class="card-body">
+        <h5 class="card-title">Manage Customers</h5>
+        <p class="card-text">Total: <strong>{{ customer_count }}</strong></p>
+        <a href="{% url 'customer_list' %}" class="btn btn-light btn-sm w-100">Go to Customers</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Products -->
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+    <div class="card text-white bg-warning h-100">
+      <div class="card-body">
+        <h5 class="card-title">Manage Products</h5>
+        <p class="card-text">Total: <strong>{{ product_count }}</strong></p>
+        <a href="{% url 'product_list' %}" class="btn btn-light btn-sm w-100">Go to Products</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Complaints -->
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+    <div class="card text-white bg-danger h-100">
+      <div class="card-body">
+        <h5 class="card-title">Manage Complaints</h5>
+        <p class="card-text">Total: <strong>{{ complaint_count }}</strong></p>
+        <a href="{% url 'complaint_list' %}" class="btn btn-light btn-sm w-100">Go to Complaints</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

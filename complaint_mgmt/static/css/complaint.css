@@ -1,0 +1,22 @@
+.complaint-form-card {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    margin-top: 2rem;
+}
+
+.complaint-form-card .form-label {
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.complaint-form-card .form-control,
+.complaint-form-card .form-select {
+    font-size: 0.95rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+#map {
+    min-height: 300px;
+}

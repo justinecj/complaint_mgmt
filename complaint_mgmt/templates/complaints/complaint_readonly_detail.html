@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Complaint Detail{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="card shadow-sm">
+    <div class="card-header bg-info text-white">
+      <h4 class="mb-0">Complaint #{{ complaint.id }}</h4>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <strong>Customer:</strong> {{ complaint.customer.name }}
+        </div>
+        <div class="col-md-6 mb-3">
+          <strong>Product:</strong> {{ complaint.product.name }}
+        </div>
+        <div class="col-md-6 mb-3">
+          <strong>Level:</strong> {{ complaint.get_level_display }}
+        </div>
+        <div class="col-md-6 mb-3">
+          <strong>Status:</strong> {{ complaint.status }}
+        </div>
+        <div class="col-md-6 mb-3">
+          <strong>Assigned To:</strong>
+          {% if complaint.assigned_to %}
+            {{ complaint.assigned_to.username }}
+          {% else %}
+            <span class="text-muted">Unassigned</span>
+          {% endif %}
+        </div>
+        <div class="col-md-6 mb-3">
+          <strong>Created At:</strong> {{ complaint.created_at|date:"d M Y H:i" }}
+        </div>
+        <div class="col-md-12 mb-3">
+          <strong>Description:</strong><br>
+          <p>{{ complaint.description }}</p>
+        </div>
+        <div class="col-md-12 mb-3">
+          <strong>Location:</strong> {{ complaint.location }}
+        </div>
+        <div class="col-md-12 mb-4">
+          <div id="map" style="height: 400px;" class="rounded border"></div>
+        </div>
+      </div>
+
+      {% if complaint.updates.exists %}
+        <hr>
+        <h5 class="mb-3">Complaint Updates</h5>
+        <ul class="list-group mb-3">
+          {% for update in complaint.updates.all|dictsortreversed:"timestamp" %}
+            <li class="list-group-item">
+              <div><strong>{{ update.updated_by.username }}</strong> - {{ update.timestamp|date:"d M Y H:i" }}</div>
+              <div>{{ update.remark }}</div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="text-muted">No updates available.</p>
+      {% endif %}
+
+      <a href="{% url 'complaint_list' %}" class="btn btn-secondary mt-3">Back to List</a>
+    </div>
+  </div>
+</div>
+
+<!-- Google Map -->
+<script>
+  function initMap() {
+    const locationStr = "{{ complaint.location }}";
+    if (!locationStr.includes(',')) return;
+
+    const [lat, lng] = locationStr.split(',').map(parseFloat);
+    const location = { lat: lat, lng: lng };
+
+    const map = new google.maps.Map(document.getElementById('map'), {
+      center: location,
+      zoom: 10,
+    });
+
+    new google.maps.Marker({
+      position: location,
+      map: map,
+    });
+  }
+</script>
+
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap">
+</script>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Unassigned Complaints{% endblock %}
+
+{% block content %}
+<div class="card p-4 shadow-sm">
+  <h3 class="mb-4">Unassigned Complaints</h3>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+
+  {% if complaints %}
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Customer</th>
+            <th>Product</th>
+            <th>Level</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for complaint in complaints %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ complaint.customer.name }}</td>
+            <td>{{ complaint.product.name }}</td>
+            <td>{{ complaint.level }}</td>
+            <td>{{ complaint.description|truncatewords:10 }}</td>
+            <td>{{ complaint.created_at|date:"Y-m-d H:i" }}</td>
+            <td>
+              <form method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="complaint_id" value="{{ complaint.id }}">
+                <button type="submit" class="btn btn-sm btn-primary">Assign to Me</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="text-muted">No unassigned complaints found.</p>
+  {% endif %}
+</div>
+{% endblock %}
