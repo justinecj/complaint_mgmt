@@ -7,6 +7,7 @@ from django.views.decorators.cache import never_cache
 from django.conf import settings
 from django.contrib import messages
 
+
 @login_required
 @admin_required
 def register_complaint(request):

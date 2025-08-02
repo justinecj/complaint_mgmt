@@ -7,32 +7,34 @@
 
 <a href="{% url 'customer_create' %}" class="btn btn-success mb-3">+ Add Customer</a>
 
-<table class="table table-bordered">
-    <thead class="table-dark">
-        <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Contact</th>
-            <th>Address</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for customer in customers %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ customer.name }}</td>
-            <td>{{ customer.contact_details }}</td>
-            <td>{{ customer.address }}</td>
-            <td>
-                <a href="{% url 'customer_edit' customer.pk %}" class="btn btn-sm btn-primary">Edit</a>
-            </td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="4" class="text-center">No customers found.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Contact</th>
+                <th>Address</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.contact_details }}</td>
+                <td>{{ customer.address }}</td>
+                <td>
+                    <a href="{% url 'customer_edit' customer.pk %}" class="btn btn-sm btn-primary">Edit</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">No customers found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
